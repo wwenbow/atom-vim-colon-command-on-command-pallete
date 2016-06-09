@@ -22,6 +22,8 @@ module.exports =
       'qa':                                               => @quitAll(),
       'wq':                                               => @writeAndQuit()
       'x':                                                => @writeAndQuit()
+      'wqa':                                              => @writeAndQuitAll()
+      'xa':                                               => @writeAndQuitAll()
       'tabnew':                                           => @openNewTab()
     }
     @subscriptions.add atom.commands.add 'atom-text-editor', commands
@@ -44,6 +46,12 @@ module.exports =
   writeAndQuit: ->
     atom.workspace.getActiveTextEditor().save()
     atom.workspace.getActivePane().destroy()
+
+  writeAndQuitAll: ->
+    editors = atom.workspace.getTextEditors()
+    editor.save() for editor in editors
+    panes = atom.workspace.getPanes()
+    pane.destroy() for pane in panes
 
   openNewTab: ->
     atom.workspace.open()
