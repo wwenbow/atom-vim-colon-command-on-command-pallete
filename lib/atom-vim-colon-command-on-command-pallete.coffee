@@ -25,6 +25,8 @@ module.exports =
       'wqa':                                              => @writeAndQuitAll()
       'xa':                                               => @writeAndQuitAll()
       'tabnew':                                           => @openNewTab()
+      'e': (event)                                        => @edit(event)
+      'edit': (event)                                     => @edit(event)
     }
     @subscriptions.add atom.commands.add 'atom-text-editor', commands
 
@@ -55,3 +57,7 @@ module.exports =
 
   openNewTab: ->
     atom.workspace.open()
+
+  edit: (event) ->
+    editorElement = atom.views.getView(atom.workspace.getActiveTextEditor())
+    atom.commands.dispatch(editorElement, 'advanced-open-file:toggle')
